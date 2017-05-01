@@ -27,6 +27,10 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(e => e.AddPolicy("localhost", b => b
+                .WithOrigins("http://localhost:3000")
+                .WithHeaders("Content-Type")
+                .WithMethods("GET", "POST")));
             // Add framework services.
             services.AddMvc();
         }
@@ -34,6 +38,7 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseCors("localhost");
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
