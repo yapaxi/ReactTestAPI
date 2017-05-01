@@ -138,7 +138,7 @@ namespace WebApi.Controllers
 
         // POST api/values
         [HttpPost("{id}")]
-        public void Post(Guid id, [FromBody]ActionObj value)
+        public object Post(Guid id, [FromBody]ActionObj value)
         {
             var ret = Returns.FirstOrDefault(e => e.Id == id);
             switch (value.Action)
@@ -166,6 +166,8 @@ namespace WebApi.Controllers
                 default:
                     throw new Exception();
             }
+
+            return new { result = "ok" };
         }
 
         // PUT api/values/5
